@@ -1,8 +1,10 @@
-package com.example.moviedb;
+package com.example.moviedb.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.moviedb.R;
 
 public class MainActivity extends AppCompatActivity {
 
