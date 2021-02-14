@@ -1,6 +1,7 @@
 package com.example.moviedb.model.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.moviedb.R;
 import com.example.moviedb.model.Results;
+import com.example.moviedb.view.MovieDetalleActivity;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     private ArrayList<Results> movieList;
     private Context context;
+    private String overview,popularity;
 
     public MoviesAdapter(ArrayList<Results> movieList, Context context) {
         this.movieList = movieList;
@@ -40,6 +43,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         holder.tvNombreMovie.setText(movieModel.getTitle());
         holder.urlImagen = movieModel.getPosterPath();
 
+        overview = movieModel.getOverview();
+        popularity = String.valueOf(movieModel.getPopularity());
+
         String urlImagenProcesada = "https://image.tmdb.org/t/p/w500" + holder.urlImagen;
         Glide.with(context)
                 .load(urlImagenProcesada)
@@ -58,7 +64,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView tvNombreMovie;
         private ImageView ivMovie;
@@ -70,8 +76,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             super(itemView);
             this.view = itemView;
 
+            itemView.setOnClickListener(this);
             tvNombreMovie = itemView.findViewById(R.id.tvNombreMovie);
             ivMovie = itemView.findViewById(R.id.ivMovie);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, MovieDetalleActivity.class);
+            intent.putExtra("Titulo",tvNombreMovie.getText());
+            intent.putExtra("Overview",overview);
+            intent.putExtra("popularity",popularity);
+            intent.putExtra("Imagen",urlImagen);
+            context.startActivity(intent);
         }
     }
 }
