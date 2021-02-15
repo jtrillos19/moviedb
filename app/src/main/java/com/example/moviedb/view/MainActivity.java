@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.moviedb.Interface.ListaMoviesView;
@@ -21,6 +24,8 @@ public class MainActivity extends BaseActivity<ListaMoviesPresenter> implements 
 
     private MoviesAdapter moviesAdapter;
     private RecyclerView rvMovies;
+    private Button btnRecagar;
+    private ProgressBar progress_circular;
 
 
     @NonNull
@@ -34,6 +39,8 @@ public class MainActivity extends BaseActivity<ListaMoviesPresenter> implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rvMovies = findViewById(R.id.rvMovies);
+        btnRecagar = findViewById(R.id.btnRecagar);
+        progress_circular = findViewById(R.id.progress_circular);
         getMovies();
     }
 
@@ -58,5 +65,22 @@ public class MainActivity extends BaseActivity<ListaMoviesPresenter> implements 
     @Override
     public void noHayResultados() {
         Toast.makeText(this, "No hay datos ⛔", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideReload() {
+        progress_circular.setVisibility(View.GONE);
+        btnRecagar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showReload() {
+        btnRecagar.setVisibility(View.VISIBLE);
+        btnRecagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMovies();
+            }
+        });
     }
 }

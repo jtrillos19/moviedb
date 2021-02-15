@@ -26,11 +26,13 @@ public class ListaMoviesPresenter extends BasePresenter implements ListaMoviesIn
     @Override
     public void onSuccess(ArrayList<Results> results) {
         listaMoviesView.cargarRecylcer(results);
+        listaMoviesView.hideReload();
     }
 
     @Override
     public void onFailure() {
         listaMoviesView.mostrarError();
+        listaMoviesView.showReload();
     }
 
     @Override

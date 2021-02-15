@@ -12,4 +12,8 @@ public interface ListaMoviesView {
     void mostrarError();
 
     void noHayResultados();
+
+    void hideReload();
+
+    void showReload();
 }
